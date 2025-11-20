@@ -1,32 +1,45 @@
-import { Transaction, TransactionFirestore, TransactionType } from "@/types/transaction";
+// lib/transactions.ts
+import {
+  addDoc,
+  collection,
+  getDocs,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "./firebaseClient";
-import { addDoc, collection, getDocs, orderBy, query, Timestamp, where } from "firebase/firestore";
+import {
+  Transaction,
+  TransactionFirestore,
+  TransactionType,
+} from "@/types/transaction";
+import { Timestamp } from "firebase/firestore";
 
-// 1) 트랜잭션 추가
+// 추가
 export async function createTransaction(params: {
   userId: string;
   type: TransactionType;
   amount: number;
   category: string;
   memo?: string;
-  date: Date; // 실제 사용일
+  date: Date;
 }): Promise<void> {
   const { userId, type, amount, category, memo, date } = params;
 
-  const ref = collection(db, 'transactions');
+  const ref = collection(db, "transactions");
 
   await addDoc(ref, {
     userId,
     type,
     amount,
     category,
-    memo: memo ?? '',
+    memo: memo ?? "",
     date: Timestamp.fromDate(date),
     createdAt: Timestamp.fromDate(new Date()),
   });
 }
 
-// 2) 특정 연/월의 트랜잭션 목록 가져오기
+// 조회
 export async function fetchTransactionsByMonth(params: {
   userId: string;
   year: number;
@@ -34,18 +47,20 @@ export async function fetchTransactionsByMonth(params: {
 }): Promise<Transaction[]> {
   const { userId, year, month } = params;
 
-  // 해당 월의 시작/끝 날짜 계산
   const start = new Date(year, month - 1, 1);
   const end = new Date(year, month, 1);
 
-  const ref = collection(db, 'transactions');
+  const startTs = Timestamp.fromDate(start);
+  const endTs = Timestamp.fromDate(end);
+
+  const ref = collection(db, "transactions");
 
   const q = query(
     ref,
-    where('userId', '==', userId),
-    where('date', '>=', start),
-    where('date', '<', end),
-    orderBy('date', 'asc'),
+    where("userId", "==", userId),
+    where("date", ">=", startTs),
+    where("date", "<", endTs),
+    orderBy("date", "asc") // 인덱스 필요
   );
 
   const snap = await getDocs(q);
@@ -62,7 +77,6 @@ export async function fetchTransactionsByMonth(params: {
       memo: data.memo ?? "",
       date: data.date.toDate(),
       createdAt: data.createdAt.toDate(),
-    } satisfies Transaction; 
+    } satisfies Transaction;
   });
-
 }
