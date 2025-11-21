@@ -1,16 +1,5 @@
+@import "./variables.scss";
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -20,7 +9,324 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--surface-container);
+  color: var(--on-surface-container-highest);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+// 유틸리티 레이어에서 전부 매핑
+@layer utilities {
+  // CSS 변수 이름 목록 (앞의 '--' 뺀 것들)
+  $color-tokens: (
+    // primary
+    primary,
+    primary-lowest,
+    primary-lower,
+    primary-low,
+    primary-mid,
+    primary-high,
+    primary-higher,
+    primary-highest,
+
+    on-primary,
+    on-primary-lowest,
+    on-primary-lower,
+    on-primary-low,
+    on-primary-mid,
+    on-primary-high,
+    on-primary-higher,
+    on-primary-highest,
+
+    primary-container,
+    primary-container-lowest,
+    primary-container-lower,
+    primary-container-low,
+    primary-container-mid,
+    primary-container-high,
+    primary-container-higher,
+    primary-container-highest,
+
+    on-primary-container,
+    on-primary-container-lowest,
+    on-primary-container-lower,
+    on-primary-container-low,
+    on-primary-container-mid,
+    on-primary-container-high,
+    on-primary-container-higher,
+    on-primary-container-highest,
+
+    // secondary
+    secondary,
+    secondary-lowest,
+    secondary-lower,
+    secondary-low,
+    secondary-mid,
+    secondary-high,
+    secondary-higher,
+    secondary-highest,
+
+    on-secondary,
+    on-secondary-lowest,
+    on-secondary-lower,
+    on-secondary-low,
+    on-secondary-mid,
+    on-secondary-high,
+    on-secondary-higher,
+    on-secondary-highest,
+
+    secondary-container,
+    secondary-container-lowest,
+    secondary-container-lower,
+    secondary-container-low,
+    secondary-container-mid,
+    secondary-container-high,
+    secondary-container-higher,
+    secondary-container-highest,
+
+    on-secondary-container,
+    on-secondary-container-lowest,
+    on-secondary-container-lower,
+    on-secondary-container-low,
+    on-secondary-container-mid,
+    on-secondary-container-high,
+    on-secondary-container-higher,
+    on-secondary-container-highest,
+
+    // surface
+    surface,
+    surface-lowest,
+    surface-lower,
+    surface-low,
+    surface-mid,
+    surface-high,
+    surface-higher,
+    surface-highest,
+
+    on-surface,
+    on-surface-lowest,
+    on-surface-lower,
+    on-surface-low,
+    on-surface-mid,
+    on-surface-high,
+    on-surface-higher,
+    on-surface-highest,
+
+    surface-container,
+    surface-container-lowest,
+    surface-container-lower,
+    surface-container-low,
+    surface-container-mid,
+    surface-container-high,
+    surface-container-higher,
+    surface-container-highest,
+
+    on-surface-container,
+    on-surface-container-lowest,
+    on-surface-container-lower,
+    on-surface-container-low,
+    on-surface-container-mid,
+    on-surface-container-high,
+    on-surface-container-higher,
+    on-surface-container-highest,
+
+    // outline
+    outline,
+    outline-lowest,
+    outline-lower,
+    outline-low,
+    outline-mid,
+    outline-high,
+    outline-higher,
+    outline-highest,
+
+    // transparency
+    transparency,
+    transparency-lower,
+    transparency-low,
+    transparency-mid,
+    transparency-high,
+    transparency-higher,
+
+    // red
+    red,
+    red-low,
+    red-high,
+    on-red,
+    on-red-low,
+    on-red-high,
+    red-container,
+    red-container-low,
+    red-container-high,
+    on-red-container,
+    on-red-container-low,
+    on-red-container-high,
+
+    // orange
+    orange,
+    orange-low,
+    orange-high,
+    on-orange,
+    on-orange-low,
+    on-orange-high,
+    orange-container,
+    orange-container-low,
+    orange-container-high,
+    on-orange-container,
+    on-orange-container-low,
+    on-orange-container-high,
+
+    // yellow
+    yellow,
+    yellow-low,
+    yellow-high,
+    on-yellow,
+    on-yellow-low,
+    on-yellow-high,
+    yellow-container,
+    yellow-container-low,
+    yellow-container-high,
+    on-yellow-container,
+    on-yellow-container-low,
+    on-yellow-container-high,
+
+    // green
+    green,
+    green-low,
+    green-high,
+    on-green,
+    on-green-low,
+    on-green-high,
+    green-container,
+    green-container-low,
+    green-container-high,
+    on-green-container,
+    on-green-container-low,
+    on-green-container-high,
+
+    // teal
+    teal,
+    teal-low,
+    teal-high,
+    on-teal,
+    on-teal-low,
+    on-teal-high,
+    teal-container,
+    teal-container-low,
+    teal-container-high,
+    on-teal-container,
+    on-teal-container-low,
+    on-teal-container-high,
+
+    // cyan
+    cyan,
+    cyan-low,
+    cyan-high,
+    on-cyan,
+    on-cyan-low,
+    on-cyan-high,
+    cyan-container,
+    cyan-container-low,
+    cyan-container-high,
+    on-cyan-container,
+    on-cyan-container-low,
+    on-cyan-container-high,
+
+    // blue
+    blue,
+    blue-low,
+    blue-high,
+    on-blue,
+    on-blue-low,
+    on-blue-high,
+    blue-container,
+    blue-container-low,
+    blue-container-high,
+    on-blue-container,
+    on-blue-container-low,
+    on-blue-container-high,
+
+    // purple
+    purple,
+    purple-low,
+    purple-high,
+    on-purple,
+    on-purple-low,
+    on-purple-high,
+    purple-container,
+    purple-container-low,
+    purple-container-high,
+    on-purple-container,
+    on-purple-container-low,
+    on-purple-container-high,
+
+    // violet
+    violet,
+    violet-low,
+    violet-high,
+    on-violet,
+    on-violet-low,
+    on-violet-high,
+    violet-container,
+    violet-container-low,
+    violet-container-high,
+    on-violet-container,
+    on-violet-container-low,
+    on-violet-container-high,
+
+    // opacity
+    opacity-0,
+    opacity-light-10,
+    opacity-light-20,
+    opacity-light-30,
+    opacity-light-40,
+    opacity-light-50,
+    opacity-light-60,
+    opacity-light-70,
+    opacity-light-80,
+    opacity-dark-10,
+    opacity-dark-20,
+    opacity-dark-30,
+    opacity-dark-40,
+    opacity-dark-50,
+    opacity-dark-60,
+    opacity-dark-70,
+    opacity-dark-80,
+
+    // backdrop
+    variant-backdrop // Rainbow는 gradient라서 아래에서 따로 처리
+  );
+
+  // 공통 유틸 생성: bg-*, text-*, border-* (+ hover, active)
+  @each $name in $color-tokens {
+
+    // 기본 배경/텍스트/보더
+    .bg-#{$name} {
+      background-color: var(--#{$name});
+    }
+
+    .text-#{$name} {
+      color: var(--#{$name});
+    }
+
+    .border-#{$name} {
+      border-color: var(--#{$name});
+    }
+
+    // hover 배경
+    .hover\:bg-#{$name}:hover {
+      background-color: var(--#{$name});
+    }
+
+    // active 배경
+    .active\:bg-#{$name}:active {
+      background-color: var(--#{$name});
+    }
+  }
+
+  // Rainbow 는 linear-gradient 이라서 background-image로 별도 처리
+  .bg-Rainbow {
+    background-image: var(--Rainbow);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
 }

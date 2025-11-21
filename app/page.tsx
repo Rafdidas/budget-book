@@ -142,9 +142,12 @@ export default function HomePage() {
 
       {/* 합계 영역 */}
       <section className="border rounded p-4 text-sm space-y-1">
-        <div>총 수입: {incomeTotal.toLocaleString()}원</div>
+        <div className="text-(--orange-high)">총 수입: {incomeTotal.toLocaleString()}원</div>
         <div>총 지출: {expenseTotal.toLocaleString()}원</div>
         <div>잔액: {balance.toLocaleString()}원</div>
+        <Link href="/stats" className="text-xs underline">
+          연도별 통계 보러가기
+        </Link>
       </section>
 
       {/* 입력 폼 */}
